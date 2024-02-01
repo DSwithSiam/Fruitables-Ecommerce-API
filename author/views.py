@@ -38,7 +38,7 @@ class UserRegistrationApiView(APIView):
             email.attach_alternative(email_body, "text/html")
             email.send()
             
-            models.UserProfile.objects.create(email=user.email, user=user)
+            models.UserProfile.objects.create(user=user)
              
             return Response("Check your mail for confirmation")
         return Response(serializer.errors)
