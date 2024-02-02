@@ -26,3 +26,20 @@ class RegistrationSerializer(serializers.ModelSerializer):
         account.is_active = False
         account.save()
         return account
+    
+class UserLoginSerializer(serializers.Serializer):
+    username = serializers.CharField()
+    password = serializers.CharField()
+
+    def validate(self, data):
+        username = data.get('username')
+        password = data.get('password')
+
+        if username and password:
+            user = User.objects.filter(username=username).first()
+
+            if user and user.check_password(password):
+                return data
+            raise serializers.ValidationError("Incorrect username or password.")
+        else:
+            raise serializers.ValidationError("Both username and password are required.")

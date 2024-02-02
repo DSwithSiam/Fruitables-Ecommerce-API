@@ -25,7 +25,7 @@ class Product(models.Model):
     title = models.CharField(max_length=150)
     image = models.ImageField(upload_to='images/product/')
     price = models.IntegerField()
-    category = models.ForeignKey(Category, on_delete=models.SET_NULL, related_name="product")
+    category = models.ForeignKey(Category, null=True ,on_delete=models.SET_NULL, related_name="product",)
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="product")
     description = models.TextField()
     weight = models.IntegerField()

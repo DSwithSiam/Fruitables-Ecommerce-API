@@ -3,6 +3,7 @@ import os
 from pathlib import Path
 import environ
 import dj_database_url
+import rest_framework
 env = environ.Env()
 environ.Env.read_env()
 
@@ -33,6 +34,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework.authtoken',
     'author',
     'contact',
     'order',

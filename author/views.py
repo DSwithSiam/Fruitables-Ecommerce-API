@@ -15,7 +15,7 @@ from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.shortcuts import redirect
 
-
+from author.serializers import UserLoginSerializer
 
 class UserRegistrationApiView(APIView):
     serializer_class = serializers.RegistrationSerializer
@@ -69,8 +69,7 @@ class UserLoginApiView(APIView):
             
             if user:
                 token, _ = Token.objects.get_or_create(user=user)
-                print(token)
-                print(_)
+    
                 login(request, user)
                 return Response({'token' : token.key, 'user_id' : user.id})
             else:
