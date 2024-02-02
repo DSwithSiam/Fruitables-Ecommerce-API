@@ -45,7 +45,7 @@ class Review(models.Model):
     text = models.TextField()
     
     def __str__(self):
-        return f"Product {self.product.name}, Name: {self.name}, Text: {self.text}"
+        return f"Product {self.product.title}, Name: {self.name}, Text: {self.text}"
     
 
 
