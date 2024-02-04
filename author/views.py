@@ -1,5 +1,7 @@
 from django.shortcuts import render
+from rest_framework import status
 from rest_framework import viewsets
+
 from . import models
 from . import serializers
 from rest_framework.views import APIView
@@ -15,7 +17,7 @@ from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.shortcuts import redirect
 
-from author.serializers import UserLoginSerializer
+from author.serializers import UserProfileSerializer, UserSerializer
 
 class UserRegistrationApiView(APIView):
     serializer_class = serializers.RegistrationSerializer
@@ -81,3 +83,21 @@ class UserLogoutView(APIView):
         request.user.auth_token.delete()
         logout(request)
         return redirect('login')
+
+class UserViewSet(viewsets.ModelViewSet):
+    serializer_class = UserSerializer
+
+    def get_queryset(self):
+        queryset = User.objects.all()
+        username = self.request.user.username
+        if username:
+            queryset = queryset.filter(username=username)
+        return queryset
+
+class UserProfileViewSet(viewsets.ModelViewSet):
+    serializer_class = UserProfileSerializer
+    
+    def get_queryset(self):
+        user = self.request.user
+        queryset = models.UserProfile.objects.filter(user=user)
+        return queryset

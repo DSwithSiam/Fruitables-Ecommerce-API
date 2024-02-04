@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
 
+from author.models import UserProfile
+
 
 class RegistrationSerializer(serializers.ModelSerializer):
     confirm_password = serializers.CharField(required = True)
@@ -43,3 +45,18 @@ class UserLoginSerializer(serializers.Serializer):
             raise serializers.ValidationError("Incorrect username or password.")
         else:
             raise serializers.ValidationError("Both username and password are required.")
+        
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'first_name', 'last_name']
+       
+
+class UserProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserProfile
+        fields = ['user', 'image', 'balance', 'mobile_no']
+
+    
